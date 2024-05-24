@@ -5,13 +5,40 @@ import tarfile
 import zipfile
 from base64 import b64encode
 from io import BytesIO
+from joblib import Parallel, delayed
 
 import requests
 from tqdm import tqdm
+import pandas as pd
 
 response = requests.get("https://pypi.org/simple/")
 html = response.text
 packages = [match.group(1) for match in re.finditer(r'"/simple/([^/]+)/"', html)]
+
+def split_list_into_parts(lst, num_parts):
+    # Calculate the size of each part
+    part_size = len(lst) // num_parts
+    remainder = len(lst) % num_parts
+    
+    # Create the list of parts
+    parts = []
+    start = 0
+    
+    for i in range(num_parts):
+        end = start + part_size + (1 if i < remainder else 0)  # distribute the remainder evenly
+        parts.append(lst[start:end])
+        start = end
+    
+    return parts
+
+num_jobs = 8
+# split into num_jobs arrays
+len_per_job = len(packages) // num_jobs
+package_batches = split_list_into_parts(packages, num_jobs)
+
+test = packages[:100]
+test_batched = split_list_into_parts(test, num_jobs)
+
 
 
 
@@ -85,7 +112,7 @@ csv_file = open("pypi-deps.csv", "w")
 writer = csv.writer(csv_file, delimiter="\t", quotechar="|", quoting=csv.QUOTE_MINIMAL)
 
 
-def extract_package(name):
+def extract_package(name, results_list):
     info = requests.get(
         f"https://pypi.org/pypi/{name}/json", headers={"Accept": "application/json"}
     ).json()
@@ -116,11 +143,19 @@ def extract_package(name):
                 deps = None
         if deps is None:
             deps = []
-        writer.writerow([name, b64encode(json.dumps(deps).encode("utf-8")).decode("utf-8")])
+
+        results_list.append([name, b64encode(json.dumps(deps).encode("utf-8")).decode("utf-8")])
+        # writer.writerow([name, b64encode(json.dumps(deps).encode("utf-8")).decode("utf-8")])
 
 
+def process_batch(batch):
+    results = []
+    for package in tqdm(batch):
+        extract_package(package, results)
+    results_df = pd.DataFrame(results, columns=["package", "deps"])
+    return results_df
 
-# main processing
-for package in (pbar := tqdm(packages, position=0, leave=True)):
-    pbar.set_postfix_str(f"Processing {package}")
-    extract_package(package)
+parallelized = Parallel(n_jobs=num_jobs, backend="threading")
+results_par = parallelized(delayed(process_batch)(batch) for batch in package_batches)
+results_merged = pd.concat(results_par)
+results_merged.to_csv("pypi-deps.csv", sep="\t", index=False)
