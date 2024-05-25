@@ -36,4 +36,11 @@ Includes same information as Crates IO, direction of edges is also the same.
 
 ### PyPI
 
-TOOD: Ziga
+Download from one drive
+
+- [full graph](https://unilj-my.sharepoint.com/:u:/g/personal/zt8811_student_uni-lj_si/EftNbN4R6gdBl2MyDfNFaWoBLiYmvm8v0Gjvw6nC3xda0Q?e=fPMolk)
+
+Includes information about:
+
+- Package name
+- Number of downloads

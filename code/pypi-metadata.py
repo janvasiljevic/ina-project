@@ -113,9 +113,13 @@ writer = csv.writer(csv_file, delimiter="\t", quotechar="|", quoting=csv.QUOTE_M
 
 
 def extract_package(name, results_list):
-    info = requests.get(
-        f"https://pypi.org/pypi/{name}/json", headers={"Accept": "application/json"}
-    ).json()
+    try:
+        info = requests.get(
+            f"https://pypi.org/pypi/{name}/json", headers={"Accept": "application/json"}
+        ).json()
+    except:
+        tqdm.write(f"Could not download metadata for {name}")
+        return
     releases = info.get("releases")
     if not releases:
         # tqdm.write(f"No releases found for {name}")
@@ -130,7 +134,11 @@ def extract_package(name, results_list):
             .replace("http://pypi.python.org/", "http://f.pypi.python.org/")
         )
         # tqdm.write("Downloading url %s" % url)
-        req = requests.get(url)
+        try:
+            req = requests.get(url)
+        except:
+            tqdm.write(f"Could not download file {url} for {name}")
+            return
 
         if req.status_code != 200:
             tqdm.write("Could not download file %s" % req.status_code)
