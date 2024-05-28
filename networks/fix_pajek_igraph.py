@@ -53,6 +53,6 @@ def fix_names(file):
 
 
 for file in os.listdir("."):
-    if "npm" in file and file.endswith(".net"):
+    if file.endswith(".net"):
         print(f"Fixing {file}")
         fix_names(file)
