@@ -27,12 +27,13 @@ def analyze_graph(graph):
     results['transitivity'] = graph.transitivity_undirected()
 
     components = graph.components()
-    # results['components'] = components
+    results['components'] = components
     results['n_components'] = components[0]
-    results['largest_component_size'] = components.giant().vcount()
+    results['largest_component'] = components.giant()
+    results['largest_component_size'] = results['largest_component'].vcount()
 
     betweenness = graph.betweenness()
-    # results['betweenness'] = betweenness
+    results['betweenness'] = betweenness
     results['avg_betweenness'] = np.mean(betweenness)
 
     return results
@@ -65,25 +66,25 @@ def random_walk_sampling(g, start_node, walk_length):
 
 
 g_crates = ig.Graph.Read_GraphML("../../networks/crates_io.graphml")
-g_crates = g_crates.simplify()
-g_crates = random_walk_sampling(g_crates, 0, 100000)
+# g_crates = g_crates.simplify()
+# g_crates = random_walk_sampling(g_crates, 0, 100000)
 
 results = analyze_graph(g_crates)
 print(results)
 
 g_npm = ig.Graph.Read_GraphML("../../networks/npm_graph_full.graphml")
 # g_npm = g_npm.simplify()
-g_npm = random_walk_sampling(g_npm, 0, 100000)
+# g_npm = random_walk_sampling(g_npm, 0, 100000)
 
 results_npm = analyze_graph(g_npm)
 print(results_npm)
 
 g_python = ig.Graph.Read_GraphML("../../networks/python-dependencies.graphml")
-g_python = g_python.simplify()
-g_python = random_walk_sampling(g_python, 0, 100000)
+# g_python = g_python.simplify()
+# g_python = random_walk_sampling(g_python, 0, 100000)
 
 results_python = analyze_graph(g_python)
 print(results_python)
 
 results_df = pd.DataFrame([results, results_npm, results_python], index=['crates', 'npm', 'python'])
-results_df.to_csv('results.csv')
+results_df.to_pickle('results.pkl')
