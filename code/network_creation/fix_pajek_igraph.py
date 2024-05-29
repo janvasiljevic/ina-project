@@ -52,7 +52,8 @@ def fix_names(file):
             print(line, end="")
 
 
-for file in os.listdir("."):
+for file in os.listdir("../../networks"):
+    file = os.path.join("../../networks", file)
     if file.endswith(".net"):
         print(f"Fixing {file}")
         fix_names(file)
