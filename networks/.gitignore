@@ -1,2 +1,5 @@
 *.net
 *.csv
+*.graphml
+*.gml
+*.zip
