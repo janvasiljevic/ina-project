@@ -10,9 +10,15 @@ npm.graphml
 pypi.graphml
 ```
 
-## Downloads (all networks, filtered, grahml format)
+## Downloads (all networks, filtered, graphml format)
 
-Download all networks from [this link](https://unilj-my.sharepoint.com/:u:/g/personal/mu6188_student_uni-lj_si/EcxjN04EWiZJuJcIy1WAa2cBg7DguK8TRSKDA3vQ9BL2lQ?e=YbRBlf).
+### LCC networks
+
+Download only largest connected components from [this link](https://unilj-my.sharepoint.com/:u:/g/personal/mu6188_student_uni-lj_si/EQrwj_3ruE1Km9twWklfthsBdnrKdO-rI-co815XkHEsZg?e=bQHcsx)
+
+### Full networks
+
+Download all networks from [this link](https://unilj-my.sharepoint.com/:u:/g/personal/mu6188_student_uni-lj_si/EZXqUoUQYIpIghEN7FHBWosBveSc9QZuvzF7PyHNWHEJZg?e=ngcw6I).
 
 ## Individual networks (pajek format)
 

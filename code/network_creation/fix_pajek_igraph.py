@@ -14,7 +14,7 @@ def fix_names(file):
             line = line.replace('""', '"').replace("*", "").replace("'", "")
             line_split = line.split()
 
-            pos = 1 if "python" in file else 6
+            pos = 1 if "pypi" in file else 6
             if len(line_split) > pos and line_split[pos].lower() in [
                 "ph",
                 "r",
