@@ -6,13 +6,13 @@ The final structure should look like this:
 
 ```
 crates_io.graphml
-npm_graph_full.graphml
-python-dependencies.graphml
+npm.graphml
+pypi.graphml
 ```
 
 ## Downloads (all networks, filtered, grahml format)
 
-Download all networks from [this link](https://unilj-my.sharepoint.com/:u:/g/personal/mu6188_student_uni-lj_si/EbGATLJeiqtEhHMA6nm0ptYBb8ackd-WlLn9Va9i5N3jpg?e=DGsWUs).
+Download all networks from [this link](https://unilj-my.sharepoint.com/:u:/g/personal/mu6188_student_uni-lj_si/EcxjN04EWiZJuJcIy1WAa2cBg7DguK8TRSKDA3vQ9BL2lQ?e=YbRBlf).
 
 ## Individual networks (pajek format)
 
