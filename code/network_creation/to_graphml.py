@@ -22,3 +22,4 @@ def to_graphml(path):
 to_graphml("../../networks/pypi.net")
 to_graphml("../../networks/crates_io.net")
 to_graphml("../../networks/npm.net")
+to_graphml("../../networks/npm_prod.net")
