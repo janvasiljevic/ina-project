@@ -53,7 +53,14 @@ The incident involving the left-pad package, which was removed from npm and cons
 
 Int this project we look at three different pacakge ecosystems: PyPI, npm, and crates.io, which are package repositories for Python, JavaScript, and Rust, respectively. We aim to investigate the security of these ecosystems by conceptualizing them as networks.... \textcolor{red}{Zej ne bom pisal dokler ne dejansko necesa nardimo.}
 
-\todo{Problem definition, motivation, background, contributions etc. + Mandatory informative illustration highlighting main contributions}
+\begin{figure}
+	\centering
+	\includegraphics[width=1\linewidth]{topdown.pdf}
+	\caption{Mandatory informative illustration highlighting main contributions.}
+	\label{fig:topdown}
+\end{figure}
+
+\todo{Problem definition,  contributions etc. }
 
 
 \section*{Related work}
@@ -141,32 +148,26 @@ Furthermore, \cite{hejderup2022prazi} find that Cargo packages call only 40\% of
 
 \section*{Methods}
 
- {\bf Data, methods, algorithms etc.}
-\lipsum[1]
+\todo{Verjetno manjka se ki}
 
-\begin{equation}
-	\phi_v = \Pr(X_{st}(v) = 1) = \Pr(X_{sv} = 1)\Pr(X_{vt} = 1)
-	\label{eq:example}
-\end{equation}
+\subsubsection*{Data Acquisition} The data for \texttt{crates.io} was acquired from their official website, where daily data dumps are available.
+For \texttt{npm}, we initially attempted to follow the official guide on their website to clone the CouchDB database.
+However, this method proved to be outdated and non-functional.
+Consequently, we utilized data from \cite{npmdata}, which provides a weekly data dump of all npm dependencies.
+The entire dataset was 200GB in size and packaged in a PostgreSQL database.
+For \texttt{PyPI}, we had to manually scrape the data, as there is no official data dump available.
 
-\lipsum[2]
+\subsection*{Data Preprocessing} From the data we acquired, we extracted package names, dependencies, and download counts. We then constructed a simple directed graph where nodes represent packages and edges represent dependencies. The edge direction is from the dependent package to the dependency. Graphs were then reduced to the largest connected component and exported in the \texttt{GraphML} format for further analysis.
 
-\begin{algorithm}[H]
-	\begin{algorithmic}[1]
-		\Require graph $G$, cutoff $k_{min}$
-		\Ensure power-law $\gamma$
-		\State $s\gets$ $n\gets$ $0$
-		\For{nodes $i\in N$}
-		\If {$k_i\geq k_{min}$}
-		\State $s\gets$ $s+\ln k_i/(k_{min}-0.5)$
-		\State $n\gets$ $n+1$
-		\EndIf
-		\EndFor
-		\State \Return $1+ns^{-1}$
-	\end{algorithmic} \vspace{8pt}
-\end{algorithm}
+\subsection*{\texttt{igraph}} Instead of relying on \texttt{networkx} for network analysis, we used the \texttt{igraph} library. Using \texttt{networkx}, even a simple import of the \texttt{npm} dataset took around 300 seconds. Additionally, every other operation was significantly slower compared to \texttt{igraph}.
 
-\lipsum[3-4]
+\subsection*{Community Detection} For community detection, we used the \texttt{leiden} algorithm, which is an efficient method for uncovering community structures in large networks.
+The algorithm optimizes the modularity function $ Q $ as $
+	Q = \frac{1}{2m} \sum_{ij} \left[ A_{ij} - \frac{k_i k_j}{2m} \right] \delta(c_i, c_j)
+$
+where \( A_{ij} \) is the weight of the edge between nodes \( i \) and \( j \), \( k_i \) and \( k_j \) are the degrees of nodes \( i \) and \( j \), \( m \) is the total weight of all edges in the graph, and \( \delta(c_i, c_j) \) is the Kronecker delta which is 1 if nodes \( i \) and \( j \) belong to the same community and 0 otherwise.
+
+\subsection*{Vulnerability analysis}
 
 \normalsize
 
