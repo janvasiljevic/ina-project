@@ -41,6 +41,7 @@ The direction of edges indicate that the crate depends on the other crate. E.g. 
 Download from one drive
 
 - full graph (will probably be reduced for processing): https://unilj-my.sharepoint.com/:u:/g/personal/mu6188_student_uni-lj_si/ETlGfP20oqpCpdMlKzUjMgoByzfsCJFu-UcrPWQdrNyKbA?e=CEYBQu
+- only production dependencies: https://unilj-my.sharepoint.com/:u:/g/personal/mu6188_student_uni-lj_si/Ee6bZFyMQoxPlTEzFjxJDPcBC75JZ6ToHOtLsEqxUK54NQ?e=8cHIcy
 
 Includes same information as Crates IO, direction of edges is also the same.
 
