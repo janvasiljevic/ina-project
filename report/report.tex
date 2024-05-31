@@ -45,8 +45,43 @@ We study a phenomenon that we claim is important in a subject in which we claim 
 
 \section*{Related work}
 
-{\bf Relevant literature ($\approx 10$ references).}
-\lipsum[5-6]
+Robustness of dependency networks is a topic that has been examined in several studies.
+\cite{hafner2021robustness} explored the robustness of the npm package dependency network and highlighted its vulnerability to targeted attacks by identifying crucial nodes.
+Attacks on such nodes could gravely affect a large portion of the network, as they are responsible for a significant number of dependencies.
+Their findings suggest that while the network has crucial nodes, it is not highly vulnerable as they are mostly large and well-maintained projects.
+Moreover, the network is trending towards a more robust state, as the number of dependencies is decreasing over time.
+
+\cite{decan2018evolution} published a comparative analysis of dependency networks across 7 package ecosystems, including Cargo, CPAN, CRAN, npm, NuGet, Packagist, and RubyGems.
+They proposed metrics to capture growth, changeability, reusability, and fragility.
+They revealed that while the ecosystems are growing, a minority of packages are responsible for most updates and dependencies.
+Furthermore, it is suggested that even transitive dependencies on unmaintained or obsolete packages can have a detrimental effect on the security and maintainability of the ecosystem.
+
+\cite{tsakpinis2024accessibility} carried out a study on the accessibility of GitHub repositories for npm and PyPI libraries to understand the level of maintenance for them.
+Their research showed that a significant portion of libraries lacked valid repository URLs, which hinders the ability to monitor vulnerabilities and maintain codebases.
+An emphasis on the importance of maintaining valid repository URLs was made, as it is crucial for the sustainability of the open-source ecosystem.
+
+Community detection has been proposed as a security analysis tool.
+The found communities can provide great insight into the structure of the network and the relationships between packages, which helps assess the robustness of the network.
+Understanding what packages are closely related and how they are connected can help identify potential vulnerabilities and dependencies that could be exploited by attackers \cite{hafner2021robustness, tsakpinis2024accessibility}.
+
+\cite{korkmazrpackages} examine the dependency graph of R packages and the relationship between various metrics.
+They find that centrality measures have a high correlation with the number of downloads and citations of a package.
+Furthermore, package attributes such as number of authors and commits also have a positive impact on the number of downloads and citations.
+
+Security vulnerability data analysis has been a large area of research in the recent years.
+\cite{decan2018vulnerabilities} studied around 400 security reports from the npm network to understand how they are discovered and fixed, and how they affect the network.
+They found that it takes around a year for a discovered vulnerability to be published publically, while it takes around 2 years after the discovery for the vulnerability to be fixed.
+\cite{shahzad2012} study vulnerability life cycles on a large software vulnerability dataset, getting similar results.
+
+\cite{HANIF2021103009} propose and evaluate novel machine learning approaches to vulnerability prediction in open-source software.
+Some simple vulnerabilities are easily detected by their approach, but even more complex vulnerabilities can be detected with high accuracy.
+
+\cite{hejderup2018} use call graphs instead of dependency graphs to detect dependencies in software.
+They find that call graphs are efficient in aiding preliminary evaluation of security issues and their impact to other applications.
+Furthermore, \cite{hejderup2022prazi} find that Cargo packages call only 40\% of their dependencies, which can lead to many unneeded security vulnerabilities.
+
+\cite{ruohonen2021} examine around 200000 PyPI packages using static analysis and find that around 46\% of the packages have at least one security vulnerability.
+
 
 \nocite{Kle00,Bou05,EB07,New08,For10,New12,FH16,PLC17,PDL18,Pei20}
 
