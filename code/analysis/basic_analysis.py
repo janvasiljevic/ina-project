@@ -75,10 +75,14 @@ for type in ["", "_lcc"]:
     g_npm = ig.Graph.Read_GraphML(f"../../networks/npm{type}.graphml")
     results_npm = analyze_graph(g_npm)
 
+    g_npm_prod = ig.Graph.Read_GraphML(f"../../networks/npm_prod{type}.graphml")
+    results_npm_prod = analyze_graph(g_npm_prod)
+
     g_python = ig.Graph.Read_GraphML(f"../../networks/pypi{type}.graphml")
     results_python = analyze_graph(g_python)
 
     results_df = pd.DataFrame(
-        [results, results_npm, results_python], index=["crates", "npm", "python"]
+        [results, results_npm, results_npm_prod, results_python],
+        index=["crates", "npm", "npm_prod", "python"],
     )
     results_df.to_csv(f"../results/basic_analysis{type}.csv")

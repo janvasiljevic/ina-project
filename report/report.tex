@@ -98,41 +98,69 @@ Furthermore, \cite{hejderup2022prazi} find that Cargo packages call only 40\% of
 \nocite{Kle00,Bou05,EB07,New08,For10,New12,FH16,PLC17,PDL18,Pei20}
 
 \section*{Results}
-
- {\bf Main results supported by math, plots, tables, diagrams etc.}
-\lipsum[1]
+We analysed three popular programming languages' ecosystems: npm \cite{NPM}, Crates.io \cite{crates} and PyPI \cite{pypi}.
+Basic stats of each ecosystem's dependency network are shown in Table \ref{tab:basic_stats}.
+NPM dependency network is analysed twice, once with combined production and development dependencies, and once with only production dependencies.
 
 \begin{table}[h]\centering%
-	\caption{Table describing data or methods.}
-	\begin{tabular}{lccccc}\toprule
-		             & $n$        & $m$           & $\langle k\rangle$ & $\langle C\rangle$ & $\langle d\rangle$ \\\midrule
-		Fine network & $438\,920$ & $9\,742\,733$ & $44.4$             & $0.37$             & $6.19$             \\
-		Random graph & $438\,920$ & $9\,781\,609$ & $44.6$             & $0.00$             & $4.92$             \\\bottomrule
+	\caption{Original dependency networks for all three ecosystems.}
+	\begin{tabular}{l|ccccc}
+		ecosystem  & $n$       & $m$        & $\langle k\rangle$ & $\langle C\rangle$ & \#CC     \\\hline
+		npm        & $2425767$ & $23006281$ & $19$               & $0.18$             & $561569$ \\
+		npm (prod) & $2424918$ & $7920337$  & $7$                & $0.06$             & $870151$ \\
+		PyPI       & $532386$  & $1649201$  & $6$                & $0.11$             & $179304$ \\
+		Crates.io  & $145269$  & $830337$   & $11$               & $0.23$             & $25179$  \\
 	\end{tabular}
-	\label{tbl:example}
+	\label{tab:basic_stats}
 \end{table}
 
-\lipsum[2-3]
+For the rest of our analysis, we only considered the largest weakly connected components.
+Statistics of these networks are shown in Table \ref{tab:lcc_stats}.
+
+\begin{table}[h]\centering%
+	\caption{Largest connected components for all three ecosystems.}
+	\begin{tabular}{l|ccccc}
+		ecosystem  & $n$       & $m$        & $\langle k\rangle$ & $\langle C\rangle$ & \% nodes \\\hline
+		npm        & $1845838$ & $22979692$ & $24$               & $0.23$             & $76$     \\
+		npm (prod) & $1518107$ & $7871828$  & $10$               & $0.10$             & $62$     \\
+		PyPI       & $349793$  & $1645588$  & $9$                & $0.17$             & $66$     \\
+		Crates.io  & $119461$  & $829615$   & $13$               & $0.28$             & $82$     \\
+	\end{tabular}
+	\label{tab:lcc_stats}
+\end{table}
+
+By enumerating over vulnerabilities from the GitHub's advisory database we examined the reach of every listed vulnerability.
+The vulnerabilities were analysed as if they all occured on the most recent package dependency graphs as we didn't have the required graph history snapshots.
+The reach is defined by the size of the affected package's in-component - all the packages that directly or indirectly depend on the affected package.
+To get a measure, which is proportional to the graph size and package importance, we summed up the page rank scores from the affected component.
+The reach measure for every vulnerability for these ecosystems is shown in Figure \ref{fig:reach}.
 
 \begin{figure}[t]\centering%
-	\includegraphics[width=0.49\linewidth]{example1}
-	\includegraphics[width=0.49\linewidth]{example2}
-	\caption{Figure showing interesting examples.~\cite{Sub18a}}
+	\includegraphics[width=\linewidth]{vulns_pagerank.png}
+	\caption{Vulnerabilities and their reach. Each dot represents a single vulnerability. }
+	\label{fig:reach}
 \end{figure}
 
-\lipsum[4-6]
+Crates.io and npm ecosystems are the most vulnerable.
+Around 30\% of all vulnerabilities could reach almost every package (~95\% of all).
+PyPI is a bit less interwined, with \textit{only} 69\% of packages being affected by the largest vulnerability.
+If we exclude all development dependencies from the npm network, we notice a very high decrease in the percentage of affeceted packages.
+The npm production network consists of around 3 times less edges than the network which also includes development dependencies.
+This might correlate to 3 times the reduction in affected packages.
+This also shows that developers are much more exposed than production environemtns, which keep their dependencies to the minimum.
+Vulnerabilities with biggest reach for every ecosystem are listed in Table \ref{tab:highest_reach}.
 
-\begin{figure}[b]\centering%
-	\includegraphics[width=\linewidth]{distributions}
-	\caption{Figure showing relevant results.~\cite{Sub18a}}
-\end{figure}
-
-\begin{figure}[t]\centering%
-	\includegraphics[width=0.45\linewidth]{results1}\hskip12pt
-	\includegraphics[width=0.45\linewidth]{results2}
-	\caption{Another figure with results.~\cite{Sub18a}}
-	\label{fig:example}
-\end{figure}
+\begin{table}[h]\centering%
+	\caption{Biggest reach vulnerability.}
+	\begin{tabular}{l|ccc}
+		ecosystem  & package   & \% packages affected & affected pagerant \\\hline
+		npm        & lodash    & $93$                 & $0.88$            \\
+		npm (prod) & ms        & $\mathbf{30}$        & $\mathbf{0.18}$   \\
+		PyPI       & pyOpenSSL & $69$                 & $0.54$            \\
+		Crates.io  & shlex     & $95$                 & $0.88$            \\
+	\end{tabular}
+	\label{tab:highest_reach}
+\end{table}
 
 \section*{Discussion}
 
