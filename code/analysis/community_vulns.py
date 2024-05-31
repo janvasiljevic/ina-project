@@ -38,8 +38,8 @@ def vulnerabilities_per_community(graph, communities, vulns):
     return Counter(vuln_communities), community_vulns
 
 
-graph = ig.Graph.Read_GraphML("../../networks/npm_prod_lcc.graphml")
-vulns = pd.read_csv("../vulnerability/npm_grouped.csv")
+graph = ig.Graph.Read_GraphML("../../networks/crates_io_lcc.graphml")
+vulns = pd.read_csv("../vulnerability/cargo_grouped.csv")
 
 communities = graph.as_undirected().community_leiden(
     objective_function="modularity", n_iterations=-1
@@ -55,6 +55,6 @@ for comm, count in vulns_per_community.most_common(5):
     community = graph.subgraph(communities[comm])
     community_pr = pr[communities[comm]]
 
-    print(f"Community {comm} ({count} vulns)")
+    print(f"Community {comm} ({count} vulns, {len(community.vs)} packages)")
     print_top_pacakges_by_metric(community, community_pr)
     print()

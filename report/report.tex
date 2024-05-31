@@ -134,6 +134,8 @@ Statistics of these networks are shown in Table \ref{tab:lcc_stats}.
 	\label{tab:lcc_stats}
 \end{table}
 
+\subsection*{Vulnerabilities per ecosystem}
+
 By enumerating over vulnerabilities from the GitHub's advisory database we examined the reach of every listed vulnerability.
 The vulnerabilities were analysed as if they all occured on the most recent package dependency graphs as we didn't have the required graph history snapshots.
 The reach is defined by the size of the affected package's in-component - all the packages that directly or indirectly depend on the affected package.
@@ -149,10 +151,12 @@ The reach measure for every vulnerability for these ecosystems is shown in Figur
 Crates.io and npm ecosystems are the most vulnerable.
 Around 30\% of all vulnerabilities could reach almost every package (~95\% of all).
 PyPI is a bit less interwined, with \textit{only} 69\% of packages being affected by the largest vulnerability.
+It's also interesting to observe the sudden jumps in the lines.
+There appears to be a tipping point between 1\% and 10\% accumulated page rank at which point the entire graph gets infected.
 If we exclude all development dependencies from the npm network, we notice a very high decrease in the percentage of affeceted packages.
 The npm production network consists of around 3 times less edges than the network which also includes development dependencies.
 This might correlate to 3 times the reduction in affected packages.
-This also shows that developers are much more exposed than production environemtns, which keep their dependencies to the minimum.
+This also shows that developers are much more exposed than production environments, which keep their dependencies to a minimum.
 Vulnerabilities with biggest reach for every ecosystem are listed in Table \ref{tab:highest_reach}.
 
 \begin{table}[h]\centering%
@@ -165,6 +169,55 @@ Vulnerabilities with biggest reach for every ecosystem are listed in Table \ref{
 		Crates.io  & shlex     & $95$                 & $0.88$            \\
 	\end{tabular}
 	\label{tab:highest_reach}
+\end{table}
+
+\subsection*{Vulnerabilities per community}
+Using the Leiden community detection we extracted communities from dependency networks and analysed top 5 communities with the higest number of packages listed in GitHub's advisory database.
+By examining the pacakges inside these communities we determined the community's general use case.
+Due to the randomness, we ran the Leiden community detection multiple times and aggregated the results.
+
+\subsubsection*{Crates.io}
+Leiden found 100 communities. There are 472 crates that were once malicious. Communities with the most malicious packages are listed in Table \ref{tab:cargo_comms}.
+\begin{table}[h]\centering%
+	\caption{Cargo.io affected communities.}
+	\begin{tabular}{l|cccc}
+		usecase       & \#vulns & packages & \% of all vulns & \% infected \\\hline
+		cryptography  & 84      & 11975    & 18              & 0.7         \\
+		logging       & 82      & 24868    & 17              & 0.3         \\
+		serilization  & 80      & 22882    & 17              & 0.3         \\
+		WASM          & 40      & 10044    & 8               & 0.4         \\
+		crossplatform & 40      & 8629     & 8               & 0.5         \\
+	\end{tabular}
+	\label{tab:cargo_comms}
+\end{table}
+\subsubsection*{PyPI}
+Leiden found 216 communities. There are 909 packages that were once malicious. Communities with the most malicious packages are listed in Table \ref{tab:pypi_comms}.
+\begin{table}[h]\centering%
+	\caption{PyPI affected communities.}
+	\begin{tabular}{l|cccc}
+		usecase      & \#vulns & packages & \% of all vulns & \% infected \\\hline
+		networking   & 273     & 58827    & 30              & 0.5         \\
+		data storage & 90      & 22253    & 10              & 0.4         \\
+		development  & 69      & 35476    & 8               & 0.2         \\
+		django       & 69      & 13206    & 8               & 0.5         \\
+		scraping     & 63      & 47490    & 7               & 0.1         \\
+	\end{tabular}
+	\label{tab:pypi_comms}
+\end{table}
+
+\subsubsection*{npm}
+Leiden found 1611 communities. There are 2482 packages that were once malicious. Communities with the most malicious packages are listed in Table \ref{tab:npm_comms}.
+\begin{table}[h]\centering%
+	\caption{npm affected communities.}
+	\begin{tabular}{l|cccc}
+		usecase      & \#vulns & packages & \% of all vulns & \% infected \\\hline
+		networking   & 582     & 284746   & 23              & 0.2         \\
+		command line & 392     & 264426   & 16              & 0.1         \\
+		utility      & 213     & 78199    & 9               & 0.3         \\
+		react        & 123     & 195990   & 5               & 0.1         \\
+		vue          & 97      & 144181   & 4               & 0.1         \\
+	\end{tabular}
+	\label{tab:npm_comms}
 \end{table}
 
 \section*{Discussion}
