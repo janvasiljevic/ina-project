@@ -49,7 +49,7 @@
     \def\pgfsysdriver{pgfsys-dvipdfm.def}
     \pdfpagewidth=\paperwidth
     \pdfpageheight=\paperheight
-\fi\fi
+  \fi\fi
 \RequirePackage{xcolor}
 \RequirePackage{tikz}
 \RequirePackage[framemethod=tikz]{mdframed}
@@ -97,12 +97,12 @@
 \setboolean{displaywatermark}{false} % Set to false to remove the watermark
 \AtBeginDocument{%
   \ifthenelse{\boolean{displaywatermark}}{%
-  \RequirePackage{draftwatermark}
-  \SetWatermarkAngle{45}
-  \SetWatermarkColor{gray!20}
-  \SetWatermarkFontSize{3cm}
-  \SetWatermarkText{{\fontfamily{bch}\bfseries arXiv.org}}
-}{}
+    \RequirePackage{draftwatermark}
+    \SetWatermarkAngle{45}
+    \SetWatermarkColor{gray!20}
+    \SetWatermarkFontSize{3cm}
+    \SetWatermarkText{{\fontfamily{bch}\bfseries arXiv.org}}
+  }{}
 }
 
 %% Copyright statement (not used)
@@ -119,21 +119,21 @@
 \RequirePackage[noend]{algpseudocode}
 \RequirePackage{changepage}
 \RequirePackage[twoside,%
-				letterpaper,includeheadfoot,%
-				layoutsize={8.125in,10.875in},%
-                layouthoffset=0.1875in,%
-                layoutvoffset=0.0625in,%
-                left=38.5pt,%
-                right=43pt,%
-                top=43pt,% 10pt provided by headsep
-                bottom=32pt,%
-                headheight=0pt,% No Header
-                headsep=10pt,%
-                footskip=25pt,
-                marginparwidth=38pt]{geometry}
+  letterpaper,includeheadfoot,%
+  layoutsize={8.125in,10.875in},%
+  layouthoffset=0.1875in,%
+  layoutvoffset=0.0625in,%
+  left=38.5pt,%
+  right=43pt,%
+  top=43pt,% 10pt provided by headsep
+  bottom=32pt,%
+  headheight=0pt,% No Header
+  headsep=10pt,%
+  footskip=25pt,
+  marginparwidth=38pt]{geometry}
 \RequirePackage[labelfont={bf,sf},%
-                labelsep=period,%
-                figurename=Fig.]{caption}
+  labelsep=period,%
+  figurename=Fig.]{caption}
 \setlength{\columnsep}{13.5pt} % Distance between the two columns of text
 \setlength{\parindent}{12pt} % Paragraph indent
 
@@ -170,7 +170,7 @@
 \renewcommand{\bibsection}{} % Remove header
 \renewcommand\bibfont{\normalfont\sffamily\fontsize{6}{8}\selectfont} % set font to be sans serif
 
- 
+
 \renewcommand\@biblabel[1]{ #1.} % Remove brackets from label
 \def\tagform@#1{\maketag@@@{\bfseries(\ignorespaces#1\unskip\@@italiccorr)}}
 \renewcommand{\eqref}[1]{\textup{{\normalfont Eq.~(\ref{#1}}\normalfont)}}
@@ -190,7 +190,7 @@
 \setlength{\belowrulesep}{1.5pt}
 \setlength{\belowbottomsep}{10pt}
 \AtBeginEnvironment{tabular}{
-\sffamily\fontsize{7.5}{10}\selectfont
+  \sffamily\fontsize{7.5}{10}\selectfont
 }
 \newcommand{\addtabletext}[1]{{\setlength{\leftskip}{9pt}\fontsize{7}{9}\selectfont#1}}
 
@@ -205,8 +205,8 @@
 \pagestyle{fancy}          % Enables the custom headers/footers
 
 \fancypagestyle{firststyle}{
-   \fancyfoot[R]{\footerfont Project report\hspace{7pt}|\hspace{7pt}\textbf{\today}\hspace{7pt}|\hspace{7pt}\textbf{\thepage\textendash\pageref{LastPage}}}
-   \fancyfoot[L]{\footerfont\@ifundefined{@doi}{}{\@doi}}
+  \fancyfoot[R]{\footerfont Project report\hspace{7pt}|\hspace{7pt}\textbf{\today}\hspace{7pt}|\hspace{7pt}\textbf{\thepage\textendash\pageref{LastPage}}}
+  \fancyfoot[L]{\footerfont\@ifundefined{@doi}{}{\@doi}}
 }
 
 
@@ -231,34 +231,34 @@
 \renewcommand{\thesubsection}{\Alph{subsection}}
 
 \titleformat{\section}
-  {\large\sffamily\bfseries}
-  {\thesection.}
-  {0.5em}
-  {#1}
-  []
+{\large\sffamily\bfseries}
+{\thesection.}
+{0.5em}
+{#1}
+[]
 \titleformat{name=\section,numberless}
-  {\large\sffamily\bfseries}
-  {}
-  {0em}
-  {#1}
-  []  
+{\large\sffamily\bfseries}
+{}
+{0em}
+{#1}
+[]
 \titleformat{\subsection}[runin]
-  {\sffamily\bfseries}
-  {\thesubsection.}
-  {0.5em}
-  {#1. }
-  []
+{\sffamily\bfseries}
+{\thesubsection.}
+{0.5em}
+{#1. }
+[]
 \titleformat{\subsubsection}[runin]
-  {\sffamily\small\bfseries\itshape}
-  {\thesubsubsection.}
-  {0.5em}
-  {#1. }
-  []    
+{\sffamily\small\bfseries\itshape}
+{\thesubsubsection.}
+{0.5em}
+{#1. }
+[]
 \titleformat{\paragraph}[runin]
-  {\sffamily\small\bfseries}
-  {}
-  {0em}
-  {#1} 
+{\sffamily\small\bfseries}
+{}
+{0em}
+{#1}
 \titlespacing*{\section}{0pc}{3ex \@plus4pt \@minus3pt}{5pt}
 \titlespacing*{\subsection}{0pc}{2.5ex \@plus3pt \@minus2pt}{2pt}
 \titlespacing*{\subsubsection}{0pc}{2ex \@plus2.5pt \@minus1.5pt}{2pt}
@@ -284,35 +284,35 @@
 
 %% Abstract formatting
 \def\xabstract{abstract}
-\long\def\abstract#1\end#2{\def\two{#2}\ifx\two\xabstract 
-\long\gdef\theabstract{\ignorespaces#1}
-\def\go{\end{abstract}}\else
-\typeout{^^J^^J PLEASE DO NOT USE ANY \string\begin\space \string\end^^J
-COMMANDS WITHIN ABSTRACT^^J^^J}#1\end{#2}
-\gdef\theabstract{\vskip12pt BADLY FORMED ABSTRACT: PLEASE DO
-NOT USE {\tt\string\begin...\string\end} COMMANDS WITHIN
-THE ABSTRACT\vskip12pt}\let\go\relax\fi
-\go}
+\long\def\abstract#1\end#2{\def\two{#2}\ifx\two\xabstract
+    \long\gdef\theabstract{\ignorespaces#1}
+    \def\go{\end{abstract}}\else
+    \typeout{^^J^^J PLEASE DO NOT USE ANY \string\begin\space \string\end^^J
+      COMMANDS WITHIN ABSTRACT^^J^^J}#1\end{#2}
+    \gdef\theabstract{\vskip12pt BADLY FORMED ABSTRACT: PLEASE DO
+      NOT USE {\tt\string\begin...\string\end} COMMANDS WITHIN
+      THE ABSTRACT\vskip12pt}\let\go\relax\fi
+  \go}
 
 % Define an environment with abstract content and styling
 \newcommand{\abscontent}{
-\noindent
-\parbox{\dimexpr\linewidth}{%
+  \noindent
+  \parbox{\dimexpr\linewidth}{%
     \vskip3pt%
-	\absfont \theabstract
-}%
-\vskip10pt%
-\noindent
-\parbox{\dimexpr\linewidth}{%
-{
- \keywordsfont \@ifundefined{@keywords}{}{\@keywords}}%
-}
-\vskip12pt%
+    \absfont \theabstract
+  }%
+  \vskip10pt%
+  \noindent
+  \parbox{\dimexpr\linewidth}{%
+    {
+        \keywordsfont \@ifundefined{@keywords}{}{\@keywords}}%
+  }
+  \vskip12pt%
 }
 
 % Option to format abstract differently for certain layouts (not used)
 \newcommand{\abscontentformatted}{
-\abscontent
+  \abscontent
 }
 
 %% Manual adjustment to line up main content with line numbers
@@ -321,34 +321,34 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 
 %% Custom title page 
 \renewcommand{\@maketitle}{%
-{%
-\ifthenelse{\boolean{shortarticle}}
-  {\ifthenelse{\boolean{singlecolumn}}{}{
-    {\raggedright\baselineskip= 24pt\titlefont \@title\par}%
-    \vskip10pt% 21pts between base of title and base of author line
-    {\raggedright \@author\par}
-    \vskip8pt% 16pts between base of affiliations and base of dates line 
-    {\raggedright \datesfont \@ifundefined{@dates}{}{\@dates}\par}
-    \vskip12pt%
-    }}
-  {% else
-    %
-    \vskip10pt%
-    {\raggedright\baselineskip= 24pt\titlefont \@title\par}%
-    \vskip10pt% 21pts between base of title and base of author line
-    {\raggedright \@author\par}
-    \vskip8pt% 16pts between base of affiliations and base of dates line 
-    {\raggedright \datesfont \@ifundefined{@dates}{}{\@dates}\par}
-    \vskip12pt
-    {%
-    \abscontent
+  {%
+      \ifthenelse{\boolean{shortarticle}}
+      {\ifthenelse{\boolean{singlecolumn}}{}{
+          {\raggedright\baselineskip= 24pt\titlefont \@title\par}%
+          \vskip10pt% 21pts between base of title and base of author line
+          {\raggedright \@author\par}
+          \vskip8pt% 16pts between base of affiliations and base of dates line 
+          {\raggedright \datesfont \@ifundefined{@dates}{}{\@dates}\par}
+          \vskip12pt%
+        }}
+      {% else
+        %
+        \vskip10pt%
+        {\raggedright\baselineskip= 24pt\titlefont \@title\par}%
+        \vskip10pt% 21pts between base of title and base of author line
+        {\raggedright \@author\par}
+        \vskip8pt% 16pts between base of affiliations and base of dates line 
+        {\raggedright \datesfont \@ifundefined{@dates}{}{\@dates}\par}
+        \vskip12pt
+        {%
+          \abscontent
+        }%
+        \vskip25pt%
+      }%
+      %%%
+      \@additionalelement
     }%
-    \vskip25pt%
-  }%
-%%%
-\@additionalelement
-}%
-\vskip\pnas@vertadjust
+  \vskip\pnas@vertadjust
 }
 
 %%%% Adding line numbers
@@ -364,7 +364,7 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
   \patchcmd{\abscontent}{\noindent}{\noindent\nolinenumbers}{}{}
   \patchcmd{\abscontent}{\theabstract}{\internallinenumbers\theabstract}{}{}
   \appto{\abscontent}{\linenumbers*}
-    
+
   \if@twocolumn
   \else
     \preto{\@maketitle}{\nolinenumbers}
@@ -376,9 +376,9 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \RequirePackage[flushmargin,ragged,symbol*]{footmisc}
 \renewcommand*{\footnotelayout}{\normalfont\sffamily\fontsize{6}{8}\selectfont} % set the footnote font
 \renewcommand{\footnoterule}{% Set the footnote hrule style
-  \kern -3pt
-  {\color{black50} \hrule width 72pt height 0.25pt}
-  \kern 2.5pt
+\kern -3pt
+{\color{black50} \hrule width 72pt height 0.25pt}
+\kern 2.5pt
 }
 
 %% Set up the acknowledgments field
@@ -387,22 +387,22 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \providecommand*{\toclevel@acknow@section}{0}
 % Format is set for research articles by default
 \titleformat{\acknow@section}[runin]
-   {\sffamily\normalsize\bfseries}
-   {}
-   {0em}
-   {#1.}
-   []
+{\sffamily\normalsize\bfseries}
+{}
+{0em}
+{#1.}
+[]
 \titlespacing{\acknow@section}
-	{0pt}
-	{3.25ex plus 1ex minus .2ex}
-	{1.5ex plus .2ex}
+{0pt}
+{3.25ex plus 1ex minus .2ex}
+{1.5ex plus .2ex}
 
 
 \newcommand{\showacknow}{% Display acknowledgments section
-\@ifundefined{@acknow}{}{
-\vskip 3.25ex plus 1ex minus .2ex
-\noindent{\sffamily\normalsize\bfseries ACKNOWLEDGMENTS.\hspace{1.5ex plus .2ex}}
-\small\@acknow}
+  \@ifundefined{@acknow}{}{
+    \vskip 3.25ex plus 1ex minus .2ex
+    \noindent{\sffamily\normalsize\bfseries ACKNOWLEDGMENTS.\hspace{1.5ex plus .2ex}}
+    \small\@acknow}
 }
 
 
@@ -412,17 +412,17 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \providecommand*{\toclevel@matmethods@section}{0}
 % Format is set for research articles by default
 \titleformat{\matmethods@section}
-   {\sffamily\normalsize\bfseries}
-   {}
-   {0em}
-   {#1}
-   []
+{\sffamily\normalsize\bfseries}
+{}
+{0em}
+{#1}
+[]
 \titlespacing{\matmethods@section}
-	{0pt}
-	{3.25ex plus 1ex minus .2ex}
-	{1.5ex plus .2ex}
+{0pt}
+{3.25ex plus 1ex minus .2ex}
+{1.5ex plus .2ex}
 \newcommand{\showmatmethods}{% Display materials&methods section
-\@ifundefined{@matmethods}{}{\matmethods@section{Materials and Methods}{\small\noindent\@matmethods}}
+  \@ifundefined{@matmethods}{}{\matmethods@section{Materials and Methods}{\small\noindent\@matmethods}}
 }
 
 %% Other packages
@@ -440,10 +440,10 @@ THE ABSTRACT\vskip12pt}\let\go\relax\fi
 \newenvironment{widetext}{%
   \PackageWarning{pnas-new}{Use of `widetext` is not recommended. We will now place it at the top or bottom of a page.}
   \begin{@widetext*}[bt!]
-  \marginnote{\itshape\footnotesize\color{red}Use of \texttt{widetext} is not recommended.}
-  \hrule
-}{
-  \hrule
+    \marginnote{\itshape\footnotesize\color{red}Use of \texttt{widetext} is not recommended.}
+    \hrule
+    }{
+    \hrule
   \end{@widetext*}
 }
 
