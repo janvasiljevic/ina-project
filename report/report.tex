@@ -63,7 +63,7 @@ We aim to investigate the security of these ecosystems by conceptualizing them a
 Our primary goal and contribution is to understand how vulnerabilities propagate through these networks and identify the communities within each ecosystem that are most susceptible to attacks.
 While a lot of research has been on the security of dependency networks through network analysis,
 we found a lack of research on this kind of analysis.
-Our report can be summarized in \ref{fig:topdown}.
+Our report can be summarized in Figure \ref{fig:topdown}.
 
 
 \begin{figure}
@@ -90,9 +90,9 @@ Research on security vulnerabilities has significantly evolved. \cite{decan2018v
 
 
 \section*{Results}
-We analysed three popular programming languages' ecosystems: npm , Crates.io  and PyPI .
+We analysed three popular programming languages' ecosystems: npm, Crates.io, and PyPI .
 Basic stats of each ecosystem's dependency network are shown in Table \ref{tab:basic_stats}.
-NPM dependency network is analysed twice, once with combined production and development dependencies, and once with only production dependencies.
+The npm dependency network is analysed twice, once with combined production and development dependencies, and once with only production dependencies.
 
 \begin{table}[h]\centering%
 	\caption{Original dependency networks for all three ecosystems.}
@@ -126,7 +126,7 @@ Statistics of these networks are shown in Table \ref{tab:lcc_stats}.
 By enumerating over vulnerabilities from the GitHub's advisory database we examined the reach of every listed vulnerability.
 The vulnerabilities were analysed as if they all occured on the most recent package dependency graphs as we didn't have the required graph history snapshots.
 The reach is defined by the size of the affected package's in-component - all the packages that directly or indirectly depend on the affected package.
-To get a measure, which is proportional to the graph size and package importance, we summed up the page rank scores from the affected component.
+To get a measure that is proportional to the graph size and package importance, we summed up the page rank scores from the affected component.
 The reach measure for every vulnerability for these ecosystems is shown in Figure \ref{fig:reach}.
 
 \begin{figure}[t]\centering%
@@ -137,19 +137,19 @@ The reach measure for every vulnerability for these ecosystems is shown in Figur
 
 Crates.io and npm ecosystems are the most vulnerable.
 Around 30\% of all vulnerabilities could reach almost every package (~95\% of all).
-PyPI is a bit less interwined, with \textit{only} 69\% of packages being affected by the largest vulnerability.
+PyPI is a bit less intertwined, with \textit{only} 69\% of packages being affected by the largest vulnerability.
 It's also interesting to observe the sudden jumps in the lines.
-There appears to be a tipping point between 1\% and 10\% accumulated page rank at which point the entire graph gets infected.
-If we exclude all development dependencies from the npm network, we notice a very high decrease in the percentage of affeceted packages.
+There appears to be a tipping point between 1\% and 10\% accumulated PageRank at which point the entire graph gets infected.
+If we exclude all development dependencies from the npm network, we notice a very high decrease in the percentage of affected packages.
 The npm production network consists of around 3 times less edges than the network which also includes development dependencies.
 This might correlate to 3 times the reduction in affected packages.
 This also shows that developers are much more exposed than production environments, which keep their dependencies to a minimum.
-Vulnerabilities with biggest reach for every ecosystem are listed in Table \ref{tab:highest_reach}.
+Vulnerabilities with the biggest reach for every ecosystem are listed in Table \ref{tab:highest_reach}.
 
 \begin{table}[h]\centering%
 	\caption{Biggest reach vulnerability.}
 	\begin{tabular}{l|ccc}
-		ecosystem  & package   & \% packages affected & affected pagerant \\\hline
+		ecosystem  & package   & \% packages affected & affected PageRank \\\hline
 		npm        & lodash    & $93$                 & $0.88$            \\
 		npm (prod) & ms        & $\mathbf{30}$        & $\mathbf{0.18}$   \\
 		PyPI       & pyOpenSSL & $69$                 & $0.54$            \\
@@ -159,8 +159,8 @@ Vulnerabilities with biggest reach for every ecosystem are listed in Table \ref{
 \end{table}
 
 \subsection*{Vulnerabilities per community}
-Using the Leiden community detection we extracted communities from dependency networks and analysed top 5 communities with the higest number of packages listed in GitHub's advisory database.
-By examining the packages inside these communities we determined the community's general use case.
+Using the Leiden community detection, we extracted communities from dependency networks and analysed top 5 communities with the higest number of packages listed in GitHub's advisory database.
+By examining the packages inside these communities, we determined the community's general use case.
 Due to the randomness, we ran the Leiden community detection multiple times and aggregated the results.
 
 \subsubsection*{Crates.io}
@@ -229,6 +229,8 @@ However, obtaining this data proved challenging due to the dynamic nature of pac
 \small
 
 \section*{Methods}
+
+All code used in this project is available on GitHub\footnote{\url{https://github.com/janvasiljevic/ina-project}}.
 
 \subsubsection*{Data Acquisition} The data for \texttt{crates.io} was acquired from their official website, where daily data dumps are available.
 For \texttt{npm}, we initially attempted to follow the official guide on their website to clone the CouchDB database.
