@@ -6,13 +6,18 @@
 
 \templatetype{pnasresearcharticle}
 
-\usepackage{lipsum}
+\usepackage{numprint}
+
+
+\titlespacing\section{0pt}{2pt plus 0pt minus 2pt}{0pt plus 0pt}
+
+\titlespacing\subsection{10pt}{2pt plus 0pt minus 2pt}{3pt plus 00pt}
 
 
 % set figures directory to be ./figures
 \graphicspath{{./figures/}}
 
-\title{\textcolor{red}{Draft} Security Analysis of Open-Source Software Package Ecosystems}
+\title{Vulnerability Reach in Package Ecosystems}
 
 \author[a]{Žiga Trček}
 \author[a]{Matej Urbas}
@@ -20,18 +25,15 @@
 
 \affil[a]{University of Ljubljana, Faculty of Computer and Information Science, Ve\v{c}na pot 113, SI-1000 Ljubljana, Slovenia}
 
-\leadauthor{Jan Vasiljević}
+\leadauthor{Jan Vasiljević, Žiga Trček, Matej Urbas}
 
-\authordeclaration{All authors contributed equally to this work.}
-\correspondingauthor{\textsuperscript{1}To whom correspondence should be addressed. E-mail: fine.author@email.com.}
 
 \begin{abstract}
-The use of open-source packages and libraries significantly accelerates software development but simultaneously introduces numerous security risks.
-Motivated by a recent near-compromise of OpenSSH by a malicious actor, this study aims to investigate the security of open-source software by conceptualizing it as a network and examining transitive vulnerabilities.
-Our analysis specifically focuses on PyPI, npm, and crates.io, which are the predominant package managers for Python, JavaScript, and Rust, respectively.
-Through this exploration, we seek to uncover potential security weaknesses within these ecosystems and propose methods to enhance their security posture.
-
-\todo{Ni se koncano: Cakam da mamo dejansk neki narejeno. Bolj placeholder.}
+	The rapid integration of open-source packages into software development introduces significant security challenges. 
+	This study investigates these risks in light of a recent incident involving OpenSSH, where a malicious actor exploited a transitive dependency. 
+	Focusing on three major package ecosystems—PyPI, npm, and crates.io—we examine their dependency networks to assess vulnerability to malicious packages. 
+	We analyze how vulnerabilities propagate through these networks and identify the communities within each ecosystem that are most susceptible to attacks. 
+	Our findings demonstrate the need for minimizing dependencies to enhance security, particularly in production environments, where reduced dependencies mitigate risk exposure.
 \end{abstract}
 	
 \dates{The manuscript was compiled on \today}
@@ -43,15 +45,26 @@ Through this exploration, we seek to uncover potential security weaknesses withi
 \thispagestyle{firststyle}
 \ifthenelse{\boolean{shortarticle}}{\ifthenelse{\boolean{singlecolumn}}{\abscontentformatted}{\abscontent}}{}
 
-\dropcap{T}he date is March 28, 2024. A principal software engineer at Microsoft notices an unusual delay in his login attempts, timing at approximately 500ms—significantly longer than usual by his standards. This prompts an investigation into higher than normal CPU usage, during which he observes anomalous behavior in the SSH daemon process. This unexpected discovery leads to the identification of a vulnerability in the XZ Utils library utilized by OpenSSH. The breach, orchestrated by a malicious actor through a combination of social engineering, code injection, and obfuscation, was set into motion over several years. Interestingly, the core code of OpenSSH remained untouched; instead, a transitive dependency was exploited. Had this vulnerability remained undetected, it could have potentially compromised a vast number of servers relying on OpenSSH, embedding a remote code execution backdoor.
+\dropcap{T}he date is March 28, 2024. A principal software engineer at Microsoft notices an unusual delay in his login attempts, timing at approximately 500ms—significantly longer than usual by his standards.
+This prompts an investigation into higher-than-normal CPU usage, during which he observes anomalous behavior in the SSH daemon process.
+This unexpected discovery leads to the identification of a vulnerability in the XZ Utils library utilized by OpenSSH.
+The breach, orchestrated by a malicious actor through a combination of social engineering, code injection, and obfuscation, was set into motion over several years.
+Interestingly, the core code of OpenSSH remained untouched; instead, a transitive dependency was exploited.
+Had this vulnerability remained undetected, it could have potentially compromised a vast number of servers relying on OpenSSH, embedding a remote code execution backdoor.
 
 
-In a manner similar to the exploitation of the XZ Utils library, other open-source software packages and libraries are also vulnerable to malicious attacks.
+Like the exploitation of the XZ Utils library, other open-source software packages and libraries are also vulnerable to malicious attacks.
 The development of software inherently involves placing trust in the authors of utilized libraries, who are often individual hobbyists or small teams with limited resources.
 The potential for significant damage is large if a malicious actor targets a lesser-maintained package that, while small, is widely used—either directly or as a transitive dependency in other software projects.
 The incident involving the left-pad package, which was removed from npm and consequently led to the failure of numerous dependent packages, serves as a reminder of the inherent fragility within the open-source ecosystem.
 
-Int this project we look at three different package ecosystems: PyPI, npm, and crates.io, which are package repositories for Python, JavaScript, and Rust, respectively. We aim to investigate the security of these ecosystems by conceptualizing them as networks.... \textcolor{red}{Zej ne bom pisal dokler ne dejansko necesa nardimo.}
+In this project, we look at three different package ecosystems: PyPI \cite{pypi}, npm \cite{NPM}, and crates.io \cite{crates}, which are package repositories for Python, JavaScript, and Rust, respectively.
+We aim to investigate the security of these ecosystems by conceptualizing them as networks and integrating external vulnerability data in our analysis.
+Our primary goal and contribution is to understand how vulnerabilities propagate through these networks and identify the communities within each ecosystem that are most susceptible to attacks.
+While a lot of research has been on the security of dependency networks through network analysis,
+we found a lack of research on this kind of analysis.
+Our report can be summarized in \ref{fig:topdown}.
+
 
 \begin{figure}
 	\centering
@@ -59,51 +72,25 @@ Int this project we look at three different package ecosystems: PyPI, npm, and c
 	\caption{Mandatory informative illustration highlighting main contributions.}
 	\label{fig:topdown}
 \end{figure}
+\section*{Related Work}
 
-\todo{Problem definition,  contributions etc. }
+The robustness of dependency networks has been extensively studied in various contexts. \cite{hafner2021robustness} focused on the npm package dependency network, highlighting its vulnerability to targeted attacks on crucial nodes that, despite being large and well-maintained, significantly impact the network due to their numerous dependencies. The study also notes a trend towards increased robustness as the number of dependencies decreases over time.
 
+\cite{decan2018evolution} provided a comparative analysis of dependency networks across seven package ecosystems, including Cargo, CPAN, CRAN, npm, NuGet, Packagist, and RubyGems. Their work introduced metrics to evaluate growth, changeability, reusability, and fragility, uncovering that while these ecosystems continue to expand, a small number of packages disproportionately influence most updates and dependencies. This study also warned of the risks posed by transitive dependencies on unmaintained or obsolete packages, which can severely affect the security and maintainability of an ecosystem.
 
-\section*{Related work}
+\cite{tsakpinis2024accessibility} studied the accessibility of GitHub repositories for npm and PyPI libraries, revealing that a significant portion of libraries lacked valid repository URLs— a critical factor for effective vulnerability monitoring and codebase maintenance.
 
-Robustness of dependency networks is a topic that has been examined in several studies.
-\cite{hafner2021robustness} explored the robustness of the npm package dependency network and highlighted its vulnerability to targeted attacks by identifying crucial nodes.
-Attacks on such nodes could gravely affect a large portion of the network, as they are responsible for a significant number of dependencies.
-Their findings suggest that while the network has crucial nodes, it is not highly vulnerable as they are mostly large and well-maintained projects.
-Moreover, the network is trending towards a more robust state, as the number of dependencies is decreasing over time.
+Community detection has been proposed as a useful method for enhancing network security analysis. Identifying closely connected package groups can reveal potential vulnerabilities and dependencies that could be exploited by attackers, as discussed in \cite{hafner2021robustness} and \cite{tsakpinis2024accessibility}. \cite{korkmazrpackages} further explored the dependency graph of R packages, finding a strong correlation between centrality measures and the popularity of packages, as measured by downloads and citations. The study also highlighted the positive influence of package attributes like the number of authors and commits.
 
-\cite{decan2018evolution} published a comparative analysis of dependency networks across 7 package ecosystems, including Cargo, CPAN, CRAN, npm, NuGet, Packagist, and RubyGems.
-They proposed metrics to capture growth, changeability, reusability, and fragility.
-They revealed that while the ecosystems are growing, a minority of packages are responsible for most updates and dependencies.
-Furthermore, it is suggested that even transitive dependencies on unmaintained or obsolete packages can have a detrimental effect on the security and maintainability of the ecosystem.
+Research on security vulnerabilities has significantly evolved. \cite{decan2018vulnerabilities} analyzed around 400 security reports from the npm network, illustrating the lengthy process from vulnerability discovery to public disclosure and eventual resolution. Similarly, \cite{shahzad2012} examined the life cycles of vulnerabilities in a broad dataset, finding comparable durations.
 
-\cite{tsakpinis2024accessibility} carried out a study on the accessibility of GitHub repositories for npm and PyPI libraries to understand the level of maintenance for them.
-Their research showed that a significant portion of libraries lacked valid repository URLs, which hinders the ability to monitor vulnerabilities and maintain codebases.
-An emphasis on the importance of maintaining valid repository URLs was made, as it is crucial for the sustainability of the open-source ecosystem.
+\cite{HANIF2021103009} proposed and evaluated novel machine learning approaches for predicting vulnerabilities in open-source software, achieving high accuracy even for complex vulnerabilities. \cite{hejderup2018} and \cite{hejderup2022prazi} shifted focus from traditional dependency graphs to call graphs for detecting software dependencies, which helped in the preliminary evaluation of security issues and their broader impact. Their findings suggest that many dependencies in Cargo packages are unnecessary, potentially introducing unneeded vulnerabilities.
 
-Community detection has been proposed as a security analysis tool.
-The found communities can provide great insight into the structure of the network and the relationships between packages, which helps assess the robustness of the network.
-Understanding what packages are closely related and how they are connected can help identify potential vulnerabilities and dependencies that could be exploited by attackers \cite{hafner2021robustness, tsakpinis2024accessibility}.
+\cite{ruohonen2021} conducted a static analysis of approximately \numprint{200000} PyPI packages and discovered that nearly half contained at least one security vulnerability, highlighting the persistent security challenges in open-source software.
 
-\cite{korkmazrpackages} examine the dependency graph of R packages and the relationship between various metrics.
-They find that centrality measures have a high correlation with the number of downloads and citations of a package.
-Furthermore, package attributes such as number of authors and commits also have a positive impact on the number of downloads and citations.
-
-Security vulnerability data analysis has been a large area of research in the recent years.
-\cite{decan2018vulnerabilities} studied around 400 security reports from the npm network to understand how they are discovered and fixed, and how they affect the network.
-They found that it takes around a year for a discovered vulnerability to be published publically, while it takes around 2 years after the discovery for the vulnerability to be fixed.
-\cite{shahzad2012} study vulnerability life cycles on a large software vulnerability dataset, getting similar results.
-
-\cite{HANIF2021103009} propose and evaluate novel machine learning approaches to vulnerability prediction in open-source software.
-Some simple vulnerabilities are easily detected by their approach, but even more complex vulnerabilities can be detected with high accuracy.
-
-\cite{hejderup2018} use call graphs instead of dependency graphs to detect dependencies in software.
-They find that call graphs are efficient in aiding preliminary evaluation of security issues and their impact to other applications.
-Furthermore, \cite{hejderup2022prazi} find that Cargo packages call only 40\% of their dependencies, which can lead to many unneeded security vulnerabilities.
-
-\cite{ruohonen2021} examine around 200000 PyPI packages using static analysis and find that around 46\% of the packages have at least one security vulnerability.
 
 \section*{Results}
-We analysed three popular programming languages' ecosystems: npm \cite{NPM}, Crates.io \cite{crates} and PyPI \cite{pypi}.
+We analysed three popular programming languages' ecosystems: npm , Crates.io  and PyPI .
 Basic stats of each ecosystem's dependency network are shown in Table \ref{tab:basic_stats}.
 NPM dependency network is analysed twice, once with combined production and development dependencies, and once with only production dependencies.
 
@@ -220,39 +207,28 @@ Leiden found 1611 communities. There are 2482 packages that were once malicious.
 	\label{tab:npm_comms}
 \end{table}
 
-\section*{Discussion}
+\section*{Conclusion}
 
-In this project we analysed the impact of malicious packages on three programming langagues' package managers:
-Rust's Crates.io, Python's PyPI and JavaScript's npm.
-By looking at the vulnerabilities for the last 8 years in GitHub's advisory database, we investigated their effect on the whole ecosystems.
+In this project, we analyzed the impact of malicious packages on the package managers of three programming languages: Rust's Crates.io, Python's PyPI, and JavaScript's npm.
+By examining vulnerabilities listed in GitHub's advisory database over the last eight years, we assessed their influence on these ecosystems.
 
-We found out that well placed malicious code can reach the vast majority of JavaScript and Rust's ecosystems.
-Python's packages are slightly less interconected, which results in a bit better isolation.
-The best protective measure against malicious packages is to keep your dependencies to a minimum, which can be seen when we exclude the development dependencies from the npm network.
-The production-only dependency network has 3 times less connections and only 20\% fewer packages than the full network and manages to stop the malicious code from spreading across more than 30\% of the entire network.
+Our findings highlight that malicious code can significantly affect the vast majority of the JavaScript and Rust ecosystems.
+Python's ecosystem, with its less interconnected package structure, shows somewhat better resistance to such threats.
+We observed that the most effective protection against malicious packages is to limit dependencies.
+For example, npm's production-only dependency network, which excludes development dependencies, has three times fewer connections and only 20\% fewer packages than the full network, effectively reducing the spread of malicious code across more than 30\% of the network.
 
-In each ecosystem, there are different package communities that get more vulnerabilities than others.
-From these communities we can somewhat determine the main uses of the programming langauge.
-Rust is a low-level, high-performance language which doesn't have many focused crates.
-Majority of it's crates are low-level operations, such as serilization and logging.
-It also has many crates which provide cross-platform capabilities.
-Python's most affeceted communities reveal its power in networking, data scraping and data manipulation.
-From the npm's affected communities we can clearly see that JavaScript is often used for web development with frameworks, such as React and Vue.
+Each ecosystem has distinct communities that are more vulnerable to attacks.
+Rust, being a low-level, high-performance language, is primarily composed of packages that perform fundamental operations like serialization and logging, and it offers strong cross-platform support.
+Python's most affected communities highlight its strengths in networking, data scraping, and data manipulation.
+The vulnerabilities in npm illustrate JavaScript's prevalent use in web development, particularly with frameworks such as React and Vue.
 
-We had some more ideas to explore, however the data needed was not easily obtainable.
-First, we wanted to rank the malicious packages by their direct and indirect download counts.
-We believe, that the most dangerous packages would have very low direct donwloads, but very high indirect downloads.
-However, this metric can't be obtained from our networks.
-We wanted to recursively traverse the package's in-component and calculate the component's download size.
-In theory, this size should be greater or equal to the root package's download count, from where we would simply subtract these two values to obtain the direct package download counts.
-However, in practice, this is not the case, as a package with a high number of downloads can suddenly start to depend on a new package, which completly breaks out approach.
-
+We had additional research ideas but were limited by data availability.
+We aimed to rank malicious packages by their direct and indirect download counts, hypothesizing that the most hazardous packages would have low direct but high indirect downloads.
+However, obtaining this data proved challenging due to the dynamic nature of package dependencies and semantic versioning.
 
 \small
 
 \section*{Methods}
-
-\todo{Verjetno manjka se ki}
 
 \subsubsection*{Data Acquisition} The data for \texttt{crates.io} was acquired from their official website, where daily data dumps are available.
 For \texttt{npm}, we initially attempted to follow the official guide on their website to clone the CouchDB database.
@@ -263,14 +239,16 @@ For \texttt{PyPI}, we had to manually scrape the data, as there is no official d
 
 \subsection*{Data Preprocessing} From the data we acquired, we extracted package names, dependencies, and download counts. We then constructed a simple directed graph where nodes represent packages and edges represent dependencies. The edge direction is from the dependent package to the dependency. Graphs were then reduced to the largest connected component and exported in the \texttt{GraphML} format for further analysis.
 
-\subsection*{\texttt{igraph}} Instead of relying on \texttt{networkx} for network analysis, we used the \texttt{igraph} library. Using \texttt{networkx}, even a simple import of the \texttt{npm} dataset took around 300 seconds. Additionally, every other operation was significantly slower compared to \texttt{igraph}.
+\subsection*{\texttt{igraph}} Instead of relying on \texttt{networkx} for network analysis, we used the \texttt{igraph} library \cite{igraph}.
+Using \texttt{networkx}, even a simple import of the \texttt{npm} dataset took around 300 seconds.
+Additionally, every other operation was significantly slower compared to \texttt{igraph}.
 
-\subsection*{Reach measure}
-This measure tells us how dangerous a vulnerability in a specific package is.
-Malicious package's in-component consists of all packages that directly or indirectly depend on the package.
-If any of these packages is installed, it also installs the malicious package.
-However, only the relative size of the in-component doesn't reflect the importance of affected packages.
-By summing the pageranks of all packages inside the in-component, we get a score from 0 to 1, which also includes the importance of affeceted packages.
+\subsection*{Reach Measure} This measure indicates the potential danger of a vulnerability within a specific package.
+The in-component of a malicious package comprises all packages that directly or indirectly depend on it.
+If any of these packages are installed, they also install the malicious package.
+However, the relative size of the in-component alone does not reflect the significance of the affected packages.
+By summing the PageRanks of all packages within the in-component, we obtain a score ranging from 0 to 1, which incorporates the importance of the affected packages.
+
 
 \subsection*{Community Detection} For community detection, we used the \texttt{leiden} algorithm, which is an efficient method for uncovering community structures in large networks.
 The algorithm optimizes the modularity function $ Q $ as $
@@ -278,13 +256,8 @@ The algorithm optimizes the modularity function $ Q $ as $
 $
 where \( A_{ij} \) is the weight of the edge between nodes \( i \) and \( j \), \( k_i \) and \( k_j \) are the degrees of nodes \( i \) and \( j \), \( m \) is the total weight of all edges in the graph, and \( \delta(c_i, c_j) \) is the Kronecker delta which is 1 if nodes \( i \) and \( j \) belong to the same community and 0 otherwise.
 
-\subsection*{Vulnerability analysis}
-
 \normalsize
 
-% \acknow{The authors would like to\dots}
-
-% \showacknow{}
 
 \bibliography{bibliography}
 
