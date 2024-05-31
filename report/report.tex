@@ -45,6 +45,7 @@ Through this exploration, we seek to uncover potential security weaknesses withi
 
 \dropcap{T}he date is March 28, 2024. A principal software engineer at Microsoft notices an unusual delay in his login attempts, timing at approximately 500ms—significantly longer than usual by his standards. This prompts an investigation into higher than normal CPU usage, during which he observes anomalous behavior in the SSH daemon process. This unexpected discovery leads to the identification of a vulnerability in the XZ Utils library utilized by OpenSSH. The breach, orchestrated by a malicious actor through a combination of social engineering, code injection, and obfuscation, was set into motion over several years. Interestingly, the core code of OpenSSH remained untouched; instead, a transitive dependency was exploited. Had this vulnerability remained undetected, it could have potentially compromised a vast number of servers relying on OpenSSH, embedding a remote code execution backdoor.
 
+
 In a manner similar to the exploitation of the XZ Utils library, other open-source software packages and libraries are also vulnerable to malicious attacks.
 The development of software inherently involves placing trust in the authors of utilized libraries, who are often individual hobbyists or small teams with limited resources.
 The potential for significant damage is large if a malicious actor targets a lesser-maintained package that, while small, is widely used—either directly or as a transitive dependency in other software projects.
@@ -94,9 +95,6 @@ Furthermore, \cite{hejderup2022prazi} find that Cargo packages call only 40\% of
 
 \cite{ruohonen2021} examine around 200000 PyPI packages using static analysis and find that around 46\% of the packages have at least one security vulnerability.
 
-
-\nocite{Kle00,Bou05,EB07,New08,For10,New12,FH16,PLC17,PDL18,Pei20}
-
 \section*{Results}
 
  {\bf Main results supported by math, plots, tables, diagrams etc.}
@@ -139,38 +137,38 @@ Furthermore, \cite{hejderup2022prazi} find that Cargo packages call only 40\% of
  {\bf Summary of results, main contributions, final conclusions, future work etc.}
 \lipsum[1-3]
 
-{\small
+\small
 
-	\section*{Methods}
+\section*{Methods}
 
-	 {\bf Data, methods, algorithms etc.}
-	\lipsum[1]
+ {\bf Data, methods, algorithms etc.}
+\lipsum[1]
 
-	\begin{equation}
-		\phi_v = \Pr(X_{st}(v) = 1) = \Pr(X_{sv} = 1)\Pr(X_{vt} = 1)
-		\label{eq:example}
-	\end{equation}
+\begin{equation}
+	\phi_v = \Pr(X_{st}(v) = 1) = \Pr(X_{sv} = 1)\Pr(X_{vt} = 1)
+	\label{eq:example}
+\end{equation}
 
-	\lipsum[2]
+\lipsum[2]
 
-	\begin{algorithm}[H]
-		\begin{algorithmic}[1]
-			\Require graph $G$, cutoff $k_{min}$
-			\Ensure power-law $\gamma$
-			\State $s\gets$ $n\gets$ $0$
-			\For{nodes $i\in N$}
-			\If {$k_i\geq k_{min}$}
-			\State $s\gets$ $s+\ln k_i/(k_{min}-0.5)$
-			\State $n\gets$ $n+1$
-			\EndIf
-			\EndFor
-			\State \Return $1+ns^{-1}$
-		\end{algorithmic} \vspace{8pt}
-	\end{algorithm}
+\begin{algorithm}[H]
+	\begin{algorithmic}[1]
+		\Require graph $G$, cutoff $k_{min}$
+		\Ensure power-law $\gamma$
+		\State $s\gets$ $n\gets$ $0$
+		\For{nodes $i\in N$}
+		\If {$k_i\geq k_{min}$}
+		\State $s\gets$ $s+\ln k_i/(k_{min}-0.5)$
+		\State $n\gets$ $n+1$
+		\EndIf
+		\EndFor
+		\State \Return $1+ns^{-1}$
+	\end{algorithmic} \vspace{8pt}
+\end{algorithm}
 
-	\lipsum[3-4]
+\lipsum[3-4]
 
-}
+\normalsize
 
 % \acknow{The authors would like to\dots}
 
