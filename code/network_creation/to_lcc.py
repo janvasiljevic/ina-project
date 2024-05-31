@@ -17,3 +17,4 @@ def convert_to_lcc(path):
 convert_to_lcc("../../networks/pypi.graphml")
 convert_to_lcc("../../networks/crates_io.graphml")
 convert_to_lcc("../../networks/npm.graphml")
+convert_to_lcc("../../networks/npm_prod.graphml")
